@@ -84,14 +84,6 @@
       const description = document.getElementById('description').value;
       const affLink = document.getElementById('affLink').value;
       const slug = document.getElementById('slug').value;
-      const metaHTML = `
-        <title>${title}</title>
-        <meta property="og:title" content="${title}">
-        <meta property="og:description" content="${description}">
-        <meta property="og:image" content="${image}">
-        <meta property="og:type" content="product">
-        <meta property="og:url" content="https://affiliatestoreng.vercel.app/product/${slug}">
-      `;
 
       if (!imageFile) {
         document.getElementById('message').textContent = 'Please select an image!';
@@ -111,6 +103,15 @@
           .from('product-images')
           .getPublicUrl(fileName);
         const imageUrl = urlData.publicUrl;
+
+        const metaHTML = `
+        <title>${title}</title>
+        <meta property="og:title" content="${title}">
+        <meta property="og:description" content="${description}">
+        <meta property="og:image" content="${image}">
+        <meta property="og:type" content="product">
+        <meta property="og:url" content="https://affiliatestoreng.vercel.app/product/${slug}">
+        `;
 
         // Insert product into the Products table with the image URL
         const { error } = await supabase.from('Products').insert({
