@@ -47,7 +47,7 @@
       <option value="orange">Orange</option>
     </select><br>
     <input type="number" id="discount" placeholder="Discount"><br>
-    <input type="text" id="description" placeholder="Product description"><br>
+    <textarea type="text" id="description" placeholder="Product description"><br></textarea>
     <input type="url" id="affLink" placeholder="Affiliate link"><br>
     <input type="text" id="slug" placeholder="Product slug (e.g., nike-air-zoom-pegasus-40)" required><br>
     <button type="submit">Add Product</button>
@@ -104,15 +104,6 @@
           .getPublicUrl(fileName);
         const imageUrl = urlData.publicUrl;
 
-        const metaHTML = `
-        <title>${title}</title>
-        <meta property="og:title" content="${title}">
-        <meta property="og:description" content="${description}">
-        <meta property="og:image" content="${imageUrl}">
-        <meta property="og:type" content="product">
-        <meta property="og:url" content="https://affiliatestoreng.vercel.app/product/${slug}">
-        `;
-
         // Insert product into the Products table with the image URL
         const { error } = await supabase.from('Products').insert({
           category,
@@ -127,7 +118,6 @@
           description: description || null,
           affLink: affLink || null,
           slug,
-          metaHTML,
           createdAt: new Date().toISOString()
         });
         if (error) throw error;
